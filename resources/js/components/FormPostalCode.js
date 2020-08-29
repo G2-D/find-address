@@ -10,43 +10,7 @@ export default class FormPostalCode {
 		}
 	}
 
-	configure({ action, method }) {
-
-		this._action = action;
-		this._method = method;
-
-		return this;
-	}
-
 	create() {
-
-		const form = document.createElement('form');
-
-		if (this._method) {
-
-			form.method = this._method;
-		}
-
-		if (this._action) {
-
-			form.action = this._action;
-		}
-		
-		form.classList.add('form');
-		
-		form.innerHTML = `
-			<div class="col-lg-12">
-				<div class="form-group">
-					<label for="postal_code">
-						Postal Code
-					</label>
-					<input type="text" class="form-control" id="postal_code" name="posta_code" placeholder="Ex: 12345-567">
-				</div>
-				<button type="submit" class="btn btn-primary">
-					Consultar
-				</button>
-			</div>
-		`;
 
 		if (!this._container.nodeName) {
 
@@ -58,17 +22,96 @@ export default class FormPostalCode {
 			throw "Container não encontrado";
 		}
 
-		form.addEventListener('submit', this.submitForm.bind(this));
+		const fields = `
+			<div class="form-group">
+				<label for="postal_code">
+					Cep
+				</label>
+				<input type="text" class="form-control" id="postal_code" name="posta_code" placeholder="Ex: 12345-567">
+			</div>
+			<label for="address">
+				Logradouro
+			</label>
+			<input type="text" class="form-control" id="address" name="address" />
+			<label for="district">
+				Bairro
+			</label>
+			<input type="text" class="form-control" id="district" name="district" />
+			<label for="city">
+				Cidade
+			</label>
+			<input type="text" class="form-control" id="city" name="city" />
+			<label for="state">
+				Estado
+			</label>
+			<input type="text" class="form-control" id="state" name="state" />
+		`;
 
-		this._container.appendChild(form);
+		const button = `
+			<button type="submit" class="btn btn-primary">
+				Consultar
+			</button>
+		`;
+
+		if (!this._container.closest('form')) {
+
+			const form = document.createElement('form');
+
+			form.innerHTML = fields + button;
+
+			form.addEventListener('submit', this.submitForm.bind(this));
+			
+			this._container.appendChild(form);
+
+			return this;
+		}
+
+		const div = document.createElement('div');
+
+		div.innerHTML = fields;
+
+		div.querySelector('#postal_code').addEventListener('blur', this.blurField.bind(this));
+
+		this._container.appendChild(div)
 
 		return this;
 	}
 
-	submitForm(e) {
+	async submitForm(e) {
 
 		e.preventDefault();
 
-		console.log(this._method);
+		const { target } = e;
+		const postalCode  = target.elements.postal_code.value;
+
+		this.getPostalData(postalCode);
+	}
+
+	blurField(e) {
+
+		const { target } = e;
+		const postalCode  = target.value;
+
+		if (postalCode.length >= 8) {
+
+			this.getPostalData(postalCode);
+		}
+	}
+
+	async getPostalData(postalCode) {
+
+		const response = await fetch(`http://api.postmon.com.br/v1/cep/${postalCode}`, {
+			method : 'GET'
+		});
+
+		if (response.status === 200 && response.ok) {
+
+			const { logradouro, bairro, cidade, estado } = await response.json();
+	
+			this._container.querySelector('#address').value 	= logradouro || '';
+			this._container.querySelector('#district').value 	= bairro || '';
+			this._container.querySelector('#city').value 		= cidade || '';
+			this._container.querySelector('#state').value 		= estado || '';
+		}
 	}
 }
