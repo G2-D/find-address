@@ -1,0 +1,57 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+  max-width: 1300px;
+
+  #content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    place-content: center;
+
+    form {
+      margin: 80px 0;
+      max-width: 480px;
+      text-align: center;
+
+      h1 {
+        margin-bottom: 80px;
+      }
+
+      input {
+        &:focus {
+          color: #495057;
+          background-color: #fff;
+          border-color: #f57921;
+          outline: 0;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  #background {
+    flex: 1;
+    background: url('../../assets/img/bg-address.svg') no-repeat center;
+    background-size: auto;
+  }
+}
+
+.btn-brand {
+  color: #fff;
+  background-color: #f57921;
+  border-color: #f57921;
+
+  &:hover {
+    color: #fff;
+    background-color: darken($color: #f57921, $amount: 10%);
+    border-color: darken($color: #f57921, $amount: 10%);
+  }
+
+  &:active {
+    color: #fff;
+    background-color: #f57921;
+    border-color: #f57921;
+  }
+}
