@@ -1,8 +1,3 @@
-const useFetch = async (url, options) => {
-
-	return await fetch(url, options);
-};
-
 export default class FormPostalCode {
 
 	constructor(container) {
@@ -38,13 +33,14 @@ export default class FormPostalCode {
 		}
 		
 		form.classList.add('form');
+		
 		form.innerHTML = `
 			<div class="col-lg-12">
 				<div class="form-group">
 					<label for="postal_code">
 						Postal Code
 					</label>
-					<input type="text" class="form-control" id="postal_code" placeholder="Ex: 12345-567">
+					<input type="text" class="form-control" id="postal_code" name="posta_code" placeholder="Ex: 12345-567">
 				</div>
 				<button type="submit" class="btn btn-primary">
 					Consultar
@@ -62,8 +58,17 @@ export default class FormPostalCode {
 			throw "Container não encontrado";
 		}
 
+		form.addEventListener('submit', this.submitForm.bind(this));
+
 		this._container.appendChild(form);
 
 		return this;
+	}
+
+	submitForm(e) {
+
+		e.preventDefault();
+
+		console.log(this._method);
 	}
 }
