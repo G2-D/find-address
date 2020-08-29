@@ -1,0 +1,22 @@
+{
+  "name": "cep-api",
+  "scripts": {
+    "start": "webpack-dev-server --mode=development",
+    "build": "webpack --mode=production -p"
+  },
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^10.0.1",
+    "style-loader": "^1.2.1",
+    "terser-webpack-plugin": "^4.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.2",
+    "popper.js": "^1.16.1"
+  }
+}
