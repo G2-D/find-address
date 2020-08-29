@@ -1,20 +1,29 @@
 // Style
-import '../sass/App.scss';
+import "../sass/App.scss";
 
 // FormPostalCode
-import FormPostalCode from './components/FormPostalCode';
+import FormPostalCode from "./components/FormPostalCode";
 
 /**
  * Form 1
  */
-const form = document.getElementById('form_postal_code');
-const formPostalCode = new FormPostalCode(form);
+const form_1 = document.getElementById('form_1');
 
-formPostalCode.create();
+ if (form_1) {
+
+	 const formPostalCode = new FormPostalCode('#form_1');
+	 
+	 formPostalCode.create();
+ }
 
 /**
  * Form 2
  */
-const formPostalCode2 = new FormPostalCode('#form_postal_code_2');
+const form_2 = document.getElementById('form_2');
 
-formPostalCode2.create();
+if (form_2) {
+
+	const formPostalCode2 = new FormPostalCode(form_2);
+	
+	formPostalCode2.create();
+}

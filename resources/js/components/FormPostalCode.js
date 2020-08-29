@@ -23,34 +23,43 @@ export default class FormPostalCode {
 		}
 
 		const fields = `
-			<div class="form-group">
-				<label for="postal_code">
-					Cep
-				</label>
-				<input type="text" class="form-control" id="postal_code" name="posta_code" placeholder="Ex: 12345-567">
+			<div class="row">
+				<div class="col-md-4 mb-3">
+					<input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="CEP"  required="" />
+				</div>
+				<div class="col-md-8 mb-3">
+					<input type="text" class="form-control" id="address" name="address" placeholder="LOGRADOURO" />
+				</div>
 			</div>
-			<label for="address">
-				Logradouro
-			</label>
-			<input type="text" class="form-control" id="address" name="address" />
-			<label for="district">
-				Bairro
-			</label>
-			<input type="text" class="form-control" id="district" name="district" />
-			<label for="city">
-				Cidade
-			</label>
-			<input type="text" class="form-control" id="city" name="city" />
-			<label for="state">
-				Estado
-			</label>
-			<input type="text" class="form-control" id="state" name="state" />
+			<div class="row">
+				<div class="col-md-9 mb-3">
+					<input type="text" class="form-control" id="complement" name="complement" placeholder="COMPLEMENTO" />
+				</div>
+				<div class="col-md-3 mb-3">
+					<input type="text" class="form-control" id="number" name="number" placeholder="Nº"  />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 mb-3">
+					<input type="text" class="form-control" id="district" name="district" placeholder="BAIRRO" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8 mb-3">
+					<input type="text" class="form-control" id="city" name="city" placeholder="CIDADE" />
+				</div>
+				<div class="col-md-4 mb-3">
+					<input type="text" class="form-control" id="state" name="state" placeholder="ESTADO" />
+				</div>
+			</div>
 		`;
 
 		const button = `
-			<button type="submit" class="btn btn-primary">
-				Consultar
-			</button>
+			<div class="row">
+				<div class="col-md-12 mt-4 mb-3">
+					<button class="btn btn-brand btn-lg btn-block" type="submit">Consultar</button>
+				</div>
+			</div>
 		`;
 
 		if (!this._container.closest('form')) {
@@ -90,7 +99,7 @@ export default class FormPostalCode {
 	blurField(e) {
 
 		const { target } = e;
-		const postalCode  = target.value;
+		const postalCode  = target.value.replace(/\D+/g, '');
 
 		if (postalCode.length >= 8) {
 
